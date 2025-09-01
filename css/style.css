@@ -19120,7 +19120,7 @@ html[dir=rtl] .text-right {
 }
 
 .uojai {
-    /*background-color: #efeccd;*/
+    background-color: #f5ebfe;
     background-image: url('/images/bg-banner.png');
     display: flex;
     justify-content: center;

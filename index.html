@@ -1,382 +1,3152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CCS417 – Artificial Intelligence: Deep Learning | University of Juba</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<html lang="en-US" style="scroll-padding-top: 72px;">
-<head class="at-element-marker">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <link rel="SHORTCUT ICON" href="/favicon.ico" type="image/x-icon">
-    <meta name="robots" content="index, follow">
-    <title>Deep Learning | University of Juba</title>
-    <meta name="description" content="Deep Learning">
-    <link rel="stylesheet" href="css/core.css?v=2" type="text/css">
-    <link rel="stylesheet" href="css/grid.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css?v=8" type="text/css">
+    body {
+      font-family: system-ui, 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem 2rem;
+    }
+
+    /* Hero section */
+    .hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #f1f5f9;
+      padding: 2rem 2.5rem;
+      border-radius: 1.75rem;
+      margin: 2rem 0 2rem 0;
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2);
+      transition: all 0.2s;
+    }
+
+    .hero-text {
+      max-width: 100%;
+      text-align: left;
+    }
+
+    /* Logo wrapper: centers the inline-block link */
+    .logo-wrapper {
+      text-align: center;
+    }
+    .university-logo {
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+    .university-logo:hover {
+      transform: scale(1.1);
+    }
+    .logo-image {
+      width: 160px;
+      height: auto;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+      transition: filter 0.2s;
+    }
+    .university-logo:hover .logo-image {
+      filter: drop-shadow(0 6px 8px rgba(0,0,0,0.25));
+    }
+
+    .course-code {
+      display: inline-block;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(4px);
+      padding: 0.25rem 0.9rem;
+      border-radius: 2rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      margin-bottom: 0.75rem;
+      border: 0.5px solid rgba(255,255,255,0.2);
+    }
+
+    .hero-text h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #fff, #cbd5e1);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-sub {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #60a5fa;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-meta {
+      font-size: 0.95rem;
+      opacity: 0.85;
+      margin-bottom: 0.75rem;
+    }
+
+    .instructor-line {
+      margin-top: 0.75rem;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #cbd5e6;
+      border-left: 3px solid #3b82f6;
+      padding-left: 1rem;
+      display: inline-block;
+    }
+
+    .hero-description {
+      margin-top: 1.5rem;
+      font-size: 1rem;
+      line-height: 1.65;
+      opacity: 0.92;
+      max-width: 85%;
+    }
+
+    .class-schedule-line {
+      padding-bottom: 0.75rem;
+      font-size: 0.9rem;
+      color: #cbd5e6;
+      border-bottom: 2px solid rgba(94,159,242,0.15);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .class-prerequisites {
+      color: rgba(94,159,242,1.0);
+      font-size: small;
+    }
+
+    /* ===== CNN FLOW ===== */
+    .cnn-flow {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+      justify-content: flex-start;
+      gap: 0.6rem;
+      row-gap: 1rem;
+      background: rgba(0,0,0,0.2);
+      padding: 1rem;
+      border-radius: 1.25rem;
+      overflow-x: auto;
+    }
+
+    .flow-panel {
+      min-height: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(4px);
+      border-radius: 0.9rem;
+      padding: 0.4rem 0.3rem;
+      transition: transform 0.2s, background 0.2s;
+      flex-shrink: 0;
+    }
+    .flow-panel:hover {
+      background: rgba(255,255,255,0.12);
+      transform: translateY(-2px);
+    }
+    .flow-panel canvas {
+      display: block;
+      margin: 0 auto;
+      border-radius: 0.6rem;
+      background: #0a0f1c;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .flow-label {
+      font-size: 0.65rem;
+      margin-top: 0.3rem;
+      font-weight: 500;
+      color: #cbd5e6;
+    }
+    .arrow {
+      font-size: 1.3rem;
+      color: #60a5fa;
+      font-weight: 600;
+      margin: 0 0.1rem;
+      flex-shrink: 0;
+      align-self: center;
+    }
+
+    /* Vertical selector panel */
+    .selector-vertical {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+    .selector-row {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255,255,255,0.04);
+      border-radius: 2rem;
+      padding: 0.1rem 0.4rem 0.1rem 0.6rem;
+    }
+    .input-btn {
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+      padding: 0.2rem 0.6rem;
+      border-radius: 2rem;
+      font-size: 0.7rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .input-btn:hover {
+      background: #3b82f6;
+      border-color: #3b82f6;
+      transform: translateY(-1px);
+    }
+    .input-btn.active {
+      background: #63A5FA;
+      border-color: #63A5FA;
+      color: #0f172a;
+      box-shadow: 0 0 6px #63A5FA;
+    }
+    .selector-arrow {
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: #4a5568;
+      transition: color 0.2s;
+    }
+    .selector-row.active-arrow .selector-arrow {
+      color: #63A5FA;
+    }
+
+    /* Navigation buttons */
+    .nav-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      justify-content: center;
+    }
+    .nav-btn {
+      background: white;
+      border: 1px solid #e2e8f0;
+      padding: 0.7rem 1.3rem;
+      border-radius: 3rem;
+      font-weight: 600;
+      color: #1e293b;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      min-width: 130px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .nav-btn:hover {
+      background: #0f172a;
+      color: white;
+      border-color: #0f172a;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+    }
+
+    /* Schedule table & General tables */
+    .schedule-table, .students-table-container {
+      overflow-x: auto;
+      margin-top: 1rem;
+      margin-bottom: 2.5rem;
+      border-radius: 1rem;
+      background: white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 1rem 1.2rem;
+      border-bottom: 2px solid #eef2f6;
+    }
+    th {
+      background: #f1f5f9;
+      font-weight: 600;
+      color: #0f172a;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Assignments */
+    .assignments-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .assignment-item {
+      background: white;
+      padding: 1.2rem 1.5rem;
+      border-radius: 1rem;
+      border-left: 5px solid #3b82f6;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      transition: all 0.2s;
+    }
+    .assignment-item:hover {
+      transform: translateX(4px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+    }
+    .assignment-item strong {
+      font-size: 1rem;
+    }
+
+    /* Grading Policy */
+    .grading-card {
+      background: white;
+      padding: 1.5rem 2rem;
+      border-radius: 1rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .grading-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      border-left: 4px solid #3b82f6;
+      padding-left: 0.75rem;
+    }
+    .grading-breakdown {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+    .grading-item {
+      flex: 1;
+      min-width: 120px;
+      text-align: center;
+      padding: 1rem;
+      background: #f1f5f9;
+      border-radius: 1rem;
+    }
+    .grading-item .percentage {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #3b82f6;
+    }
+    .grading-item .label {
+      font-size: 0.9rem;
+      color: #475569;
+      margin-top: 0.3rem;
+    }
+    .grading-note {
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: #475569;
+      text-align: center;
+      border-top: 1px solid #eef2f6;
+      padding-top: 1rem;
+    }
+
+    /* Resources */
+    .resources-card {
+      background: white;
+      padding: 1.5rem 2rem;
+      border-radius: 1rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .resources-card ul {
+      margin-left: 1.5rem;
+    }
+    .resources-card li {
+      margin: 0.5rem 0;
+    }
+
+    /* Staff section */
+    .staff-section {
+      margin-top: 1.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e2e8f0;
+    }
+    .staff-section h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.8rem;
+    }
+    .staff-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .instructor-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .staff-card {
+      background: white;
+      border-radius: 1.25rem;
+      padding: 1.8rem 1rem;
+      text-align: center;
+      width: 220px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      transition: all 0.25s;
+    }
+    .staff-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 30px -12px rgba(0,0,0,0.15);
+    }
+    .staff-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+      border: 5px solid #f8fafc;
+    }
+    .staff-name {
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 0.3rem;
+    }
+    .staff-role {
+      font-size: 0.85rem;
+      color: #475569;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e2e8f0;
+      color: #475569;
+      font-size: 0.85rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1rem 1.5rem;
+      }
+      .hero {
+        padding: 2rem 1.5rem;
+      }
+      .hero-text h1 {
+        font-size: 2rem;
+      }
+      .hero-description {
+        max-width: 100%;
+      }
+      .instructor-line {
+        border-left: none;
+        padding-left: 0;
+        display: block;
+      }
+      .class-schedule-line {
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      .cnn-flow {
+        justify-content: center;
+      }
+      .arrow {
+        display: none;
+      }
+      .nav-btn {
+        min-width: auto;
+        flex: 1 1 auto;
+        padding: 0.5rem 0.8rem;
+      }
+      .staff-card {
+        width: 170px;
+        padding: 1.2rem 0.8rem;
+      }
+      .staff-photo {
+        width: 100px;
+        height: 100px;
+      }
+      .course-code {
+        font-size: 0.75rem;
+      }
+    }
+
+    a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    h2 {
+      font-size: 1.7rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+    section {
+      margin-bottom: 2rem;
+    }
+  </style>
 </head>
 <body>
-<div>
-    <section>
-        <div class="d-flex mx-lg-0">
-            <div class="w-100 ml-5 mr-5 mt-3">
-                <div class="a">
-                    <div class="uojai w-100">
-                        <a class="logo mt-5" href="https://uojai.github.io/" target="_self"><img src="images/uojai.png" alt="University of Juba AI"></a>
-                    </div>
-                    <div class="deeplearning  w-100">
-                        <img  class="banner w-100" src="images/banner.jpg">
-                    </div>
-                    <div class="ml-3 mr-3 mt-3 mb-3 link-group">
-                        <a href="index.html" class="elementor-button elementor-button-orange elementor-button-orange-selected">
-                            <span>Home</span>
-                        </a>
-                        <a href="schedule.html" class="elementor-button elementor-button-orange">
-                            <span>Schedule</span>
-                        </a>
-                        <a href="students.html" class="elementor-button elementor-button-orange">
-                            <span>Students</span>
-                        </a>
-                        <a href="resources.html" class="elementor-button elementor-button-orange">
-                            <span>Resources</span>
-                        </a>
-                    </div>
-                    <div class="ml-3 mr-3">
-                        <p class="text-justify font-italic">
-                            <span class="base mb-0">
-                                This comprehensive course introduces the expansive world of AI
-                                before diving deep into its most transformative subset: Deep Learning.
-                                We'll explore fundamental concepts, build neural networks, and gain
-                                practical skills while examining state-of-the-art topics like large
-                                language models and generative AI, all while considering their diverse
-                                applications and ethical implications. A foundation in calculus and
-                                linear algebra is required, with Python experience being a plus.
-                                Join us to unlock the power of AI and deep learning!
-                            </span>
-                        </p>
-                    </div>
+<div class="container">
+  <!-- Hero section -->
+  <div class="hero">
+    <div class="hero-text">
+      <div class="logo-wrapper">
+        <a href="https://uojai.github.io/" target="_self" class="university-logo">
+          <img class="logo-image" src="images/uojai_logo_blue.png" alt="University of Juba Artificial Intelligence">
+        </a>
+      </div>
 
+      <div class="course-code">CCS417</div>
+      <h1>Artificial Intelligence</h1>
+      <div class="hero-sub">Deep Learning</div>
+      <div class="hero-meta">Mandatory Course for 4th Year Students • Fall 2026</div>
+      <div class="instructor-line">Dr. Felix, Associate Professor of Computer Science</div>
+      <div class="hero-description">
+        This course provides a comprehensive introduction to modern deep learning architectures and neural network fundamentals. Designed for 4th-year computer science undergraduates, students will explore foundational neural models, advanced optimization techniques, generative modeling, and attention-based architectures. Practical implementation and theoretical understanding are combined over an intensive 8-week curriculum.
+        <em class="class-prerequisites">Prerequisites: Linear algebra, basic probability, and Python programming.</em>
+        <br><br>
+      </div>
+      <div class="class-schedule-line">
+        <span><strong>Lectures & Lab:</strong> <em class="class-prerequisites">Tue/Thu 2:00–4:00</em> <strong>Location:</strong> <em class="class-prerequisites">The Main Computer Lab</em> </span>
+      </div>
 
-                </div>
-            </div>
+      <!-- CNN simulation panels -->
+      <div class="cnn-flow" id="cnnFlow"></div>
+    </div>
+  </div>
+
+  <!-- Navigation buttons -->
+  <div class="nav-buttons">
+    <a href="#schedule" class="nav-btn">📅 Schedule</a>
+    <a href="#assignments" class="nav-btn">📝 Assignments</a>
+    <a href="#grading" class="nav-btn">📊 Grading Policy</a>
+    <a href="#resources" class="nav-btn">📚 Resources</a>
+    <a href="#staff" class="nav-btn">👥 Staff</a>
+    <a href="#students" class="nav-btn">🎓 Students</a>
+  </div>
+
+  <!-- Schedule Section -->
+  <section id="schedule">
+    <h2>Weekly Schedule</h2>
+    <div class="schedule-table">
+      <table>
+        <thead>
+        <tr><th>Week</th><th>Module Topic</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+        <tr><td>Week 1</td><td>Foundations of Deep Learning</td><td>Introduction to neural networks, perceptrons, activation functions, and feedforward dynamics.</td></tr>
+        <tr><td>Week 2</td><td>Optimization and Training</td><td>Gradient descent, backpropagation algorithms, momentum, Adam optimizer, and learning rate scheduling.</td></tr>
+        <tr><td>Week 3</td><td>Regularization</td><td>Overfitting prevention, dropout, weight decay (L1/L2), batch normalization, and data augmentation.</td></tr>
+        <tr><td>Week 4</td><td>Convolutional Neural Networks</td><td>Spatial convolutions, pooling layers, feature maps, and modern CNN architectures (ResNet, VGG).</td></tr>
+        <tr><td>Week 5</td><td>RNN & LSTM Networks</td><td>Sequential data modeling, recurrent neural networks, vanishing gradients, and Long Short-Term Memory units.</td></tr>
+        <tr><td>Week 6</td><td>Transformers and Attention</td><td>Self-attention mechanisms, multi-head attention, positional encoding, and transformer architectures.</td></tr>
+        <tr><td>Week 7</td><td>Generative Models</td><td>Autoencoders, Variational Autoencoders (VAEs), Generative Adversarial Networks (GANs), and diffusion models.</td></tr>
+        <tr><td>Week 8</td><td>Advanced Topics</td><td>Reinforcement learning integration, model deployment, efficient inference, and state-of-the-art frontiers.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Assignments Section -->
+  <section id="assignments">
+    <h2>Assignments</h2>
+    <div class="assignments-grid">
+      <div class="assignment-item">
+        <strong>Assignment 1: Class Registration</strong><br>
+        Course registration and environment setup setup task. – <a href="#">Click here to complete registration</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Grading Policy Section -->
+  <section id="grading">
+    <h2>Grading Policy</h2>
+    <div class="grading-card">
+      <div class="grading-breakdown">
+        <div class="grading-item">
+          <div class="percentage">10%</div>
+          <div class="label">Attendance</div>
         </div>
-    </section>
-    <section>
-        <div class="d-flex mx-lg-0">
-            <div class="w-100 ml-5 mr-5 mt-3">
-                <div class="depth-lg-none bg-lg-transparent bg-lg-transparent depth-lg-none">
-                    <div class="rowex row-cols-1 row-cols-md-1 w-100 bg-light-gray rounded-t"></div>
-                    <div class="rowex row-cols-1 row-cols-md-2 w-100 bg-light-gray">
-                        <div class="col mb-5 mb-md-0 w-100">
-                            <div class="bg-light-gray pb-3">
-                                <div class="card-body  text-center bg-light-gray bottom-white px-3 py-3">
-                                    <div class="card-body">
-                                        <img class="staff-image-primary" src="images/felix_ai.jpg" alt="felix"><br>
-<!--                                        <span class="cool-title">Instructor</span><br>-->
-                                        <a href="https://www.felixgonda.com">Dr. Felix Gonda</a><br>
-
-                                        <p class="px-0  small font-italic text-center">
-                                            Assistant Professor, Computer Science<br>
-                                            E-mail: <span class="text-blue">uojdeeplearning@gmail.com</span><br>
-                                            Meeting: <span class="text-orange">send an email to schedule a meeting</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col mb-5 mb-md-1 w-100">
-
-                            <table class="course-info-table">
-                                <tr>
-                                    <td class="course-info-textbook">
-                                        <img onclick="GotoPage('https://drive.google.com/file/d/1a7jWpDhPcXdaqXqxBg_6yihyqIxhNNhN/view?usp=sharing')" class="mt-0 textbook-card w-300" src="images/deeplearning.jpeg">
-                                        <p class="px-0 text-left small font-italic">
-                                            Click image to download PDF
-<!--                                            or read online at:-->
-<!--                                            <a href="https://www.deeplearningbook.org/">https://www.deeplearningbook.org</a>-->
-                                        </p>
-
-                                    </td>
-                                    <td>
-                                        <div class="card-body">
-                                            <p class="px-0 text-left small">
-                                                <strong>Lecture</strong> (@ Senate Hall in the Administration Building)<br>
-                                                Lecture Group A:  Monday 1:00-2:00 pm<br>
-                                                Lecture Group B:  Monday 2:30-3:30 pm
-                                            </p>
-                                            <p class="px-0 text-left small">
-                                                <strong>Learning Labs</strong> (@ UoJ Computer Lab)<br>
-                                                Lab Group A: Thursday 2-3 pm<br>
-                                                Lab Group B: Thursday 3-4 pm<br>
-                                                Lab Group C: Friday 2-3 pm<br>
-                                                Lab Group D: Friday 3-4 pm
-                                            </p>
-                                            <p class="px-0 text-left small">
-                                                <strong>X Lab</strong> (@ UoJ Computer Lab)<br>
-                                                Tuesday, 2pm-4pm
-                                            </p>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-
-                        </div>
-                    </div>
-                    <div class="rowex row-cols-1 row-cols-md-1 w-100 bg-light-gray rounded-b">
-<!--                        <div class="col mb-5 mb-md-0 w-100">-->
-<!--                            <div class="w-100 bg-white session-item-line-gray"></div>-->
-<!--                        </div>-->
-                    </div>
-                </div>
-            </div>
+        <div class="grading-item">
+          <div class="percentage">20%</div>
+          <div class="label">Assignments</div>
         </div>
-
-    </section>
-    <section>
-        <div class="d-flex mx-lg-0">
-            <div class="w-100 ml-5 mr-5 mt-5">
-                <div class="depth-lg-none bg-lg-transparent bg-lg-transparent depth-lg-none">
-                    <div class="rowex row-cols-1 row-cols-md-1 w-100 cool-title">
-                        Teaching Fellows
-                    </div>
-                </div>
-            </div>
+        <div class="grading-item">
+          <div class="percentage">70%</div>
+          <div class="label">Final Exam</div>
         </div>
-    </section>
-    <section>
-        <div class="d-flex mx-lg-0">
-            <div class="w-100 ml-5 mr-5 mt-3">
-                <div class="depth-lg-none bg-lg-transparent bg-lg-transparent depth-lg-none">
-                    <div class="rowex row-cols-12 row-cols-md-12 w-100 bg-light-gray">
+      </div>
+      <div class="grading-note">
+        📌 <em>All assignments must be submitted on time. Late submissions incur a 10% penalty per day. The final exam includes written theoretical assessment and practical coding evaluations.</em>
+      </div>
+    </div>
+  </section>
 
-                        <div class="col mb-2 mb-md-0">
-                            <div class="bg-light-gray pb-3">
-                                <div class="card-body  text-center bg-light-gray bottom-white px-3 py-3">
-                                    <div class="card-body team-blue">
-                                        <img class="tf-image-primary" src="images/reeng.jpg" alt="Reeng"><br>
-                                        <p class="px-0 text-center small">
-                                            Reeng Kuol Reeng<br>
-                                            (<a class="extra-small" href="lab.html#GROUP-A">Laboratory Group A</a>)
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-2 mb-md-0">
-                            <div class="bg-light-gray pb-3">
-                                <div class="card-body  text-center bg-light-gray bottom-white px-3 py-3">
-                                    <div class="card-body team-blue">
-                                        <img class="tf-image-primary" src="images/malish.jpg" alt="Malish"><br>
-                                        <p class="px-0 text-center small">
-                                            Malish Ben Kenyi<br>
-                                            (<a class="extra-small" href="lab.html#GROUP-A">Laboratory Group A</a>)
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-2 mb-md-0">
-                            <div class="bg-light-gray pb-3">
-                                <div class="card-body  text-center bg-light-gray bottom-white px-3 py-3">
-                                    <div class="card-body team-blue">
-                                        <img class="tf-image-primary" src="images/adam.jpg" alt="Adam"><br>
-                                        <p class="px-0 text-center small">
-                                            Adam Juma Haruun<br>
-                                            (<a class="extra-small" href="lab.html#GROUP-A">Laboratory Group A</a>)
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-2 mb-md-0">
-                            <div class="bg-light-gray pb-3">
-                                <div class="card-body  text-center bg-light-gray bottom-white px-3 py-3">
-                                    <div class="card-body team-blue">
-                                        <img class="tf-image-primary" src="images/deng.jpg" alt="Deng"><br>
-                                        <p class="px-0 text-center small">
-                                            Deng Kuol Ajak<br>
-                                            (<a class="extra-small" href="lab.html#GROUP-A">Laboratory Group A</a>)
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-2 mb-md-0">
-                            <div class="bg-light-gray pb-3">
-                                <div class="card-body  text-center bg-light-gray bottom-white px-3 py-3">
-                                    <div class="card-body team-red">
-                                        <img class="tf-image-primary" src="images/nesnea.jpg" alt="Nesnea"><br>
-                                        <p class="px-0 text-center small">
-                                            Nesnea Khadi Silvano<br>
-                                            (<a class="extra-small" href="lab.html#GROUP-B">Laboratory Group B</a>)
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-2 mb-md-0">
-                            <div class="bg-light-gray pb-3">
-                                <div class="card-body  text-center bg-light-gray bottom-white px-3 py-3">
-                                    <div class="card-body team-red">
-                                        <img class="tf-image-primary" src="images/emmanuel.jpg" alt="Emmanuel"><br>
-                                        <p class="px-0 text-center small">
-                                            Emmanuel Deng Mei <br>
-                                            (<a class="extra-small" href="lab.html#GROUP-B">Laboratory Group B</a>)
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-2 mb-md-0">
-                            <div class="bg-light-gray pb-3">
-                                <div class="card-body  text-center bg-light-gray bottom-white px-3 py-3">
-                                    <div class="card-body team-red">
-                                        <img class="tf-image-primary" src="images/edmond.jpg" alt="Edmond"><br>
-                                        <p class="px-0 text-center small">
-                                            Edmond Anthony Mesaga<br>
-                                            (<a class="extra-small" href="lab.html#GROUP-B">Laboratory Group B</a>)
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-2 mb-md-0">
-                            <div class="bg-light-gray pb-3">
-                                <div class="card-body  text-center bg-light-gray bottom-white px-3 py-3">
-                                    <div class="card-body team-red">
-                                        <img class="tf-image-primary" src="images/monica.jpg" alt="Monica"><br>
-                                        <p class="px-0 text-center small">
-                                            Monica Ayen Bol<br>
-                                            (<a class="extra-small" href="lab.html#GROUP-B">Laboratory Group B</a>)
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-2 mb-md-0">
-                            <div class="bg-light-gray pb-3">
-                                <div class="card-body  text-center bg-light-gray bottom-white px-3 py-3">
-                                    <div class="card-body team-green">
-                                        <img class="tf-image-primary" src="images/abraham.jpg" alt="Abraham"><br>
-                                        <p class="px-0 text-center small">
-                                            Abraham Dit Manyang<br>
-                                            (<a class="extra-small" href="lab.html#GROUP-C">Laboratory Group C</a>)
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-2 mb-md-0">
-                            <div class="bg-light-gray pb-3">
-                                <div class="card-body  text-center bg-light-gray bottom-white px-3 py-3">
-                                    <div class="card-body team-green">
-                                        <img class="tf-image-primary" src="images/agar.jpg" alt="Agar"><br>
-                                        <p class="px-0 text-center small">
-                                            Agar Marial Riak<br>
-                                            (<a class="extra-small" href="lab.html#GROUP-C">Laboratory Group C</a>)
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-2 mb-md-0">
-                            <div class="bg-light-gray pb-3">
-                                <div class="card-body  text-center bg-light-gray bottom-white px-3 py-3">
-                                    <div class="card-body team-green">
-                                        <img class="tf-image-primary" src="images/ngor.jpg" alt="Ngor"><br>
-                                        <p class="px-0 text-center small">
-                                            Ngor Wek Wek<<br>
-                                            (<a class="extra-small" href="lab.html#GROUP-C">Laboratory Group C</a>)
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-2 mb-md-0">
-                            <div class="bg-light-gray pb-3">
-                                <div class="card-body  text-center bg-light-gray bottom-white px-3 py-3">
-                                    <div class="card-body team-green">
-                                        <img class="tf-image-primary" src="images/james.jpg" alt="James"><br>
-                                        <p class="px-0 text-center small">
-                                            James Dut Mathok<br>
-                                            (<a class="extra-small" href="lab.html#GROUP-C">Laboratory Group C</a>)
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-2 mb-md-0">
-                            <div class="bg-light-gray pb-3">
-                                <div class="card-body  text-center bg-light-gray bottom-white px-3 py-3">
-                                    <div class="card-body team-orange">
-                                        <img class="tf-image-primary" src="images/KuotChol.jpg" alt="Kuot Chol"><br>
-                                        <p class="px-0 text-center small">
-                                            Kuot Chol Majok<br>
-                                            (<a class="extra-small" href="lab.html#GROUP-C">Laboratory Group D</a>)
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-2 mb-md-0">
-                            <div class="bg-light-gray pb-3">
-                                <div class="card-body  text-center bg-light-gray bottom-white px-3 py-3">
-                                    <div class="card-body team-orange">
-                                        <img class="tf-image-primary" src="images/moses.jpg" alt="Moses"><br>
-                                        <p class="px-0 text-center small">
-                                            Moses Luwalla Wani<br>
-                                            (<a class="extra-small" href="lab.html#GROUP-C">Laboratory Group D</a>)
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-2 mb-md-0">
-                            <div class="bg-light-gray pb-3">
-                                <div class="card-body  text-center bg-light-gray bottom-white px-3 py-3">
-                                    <div class="card-body team-orange">
-                                        <img class="tf-image-primary" src="images/ayath.jpg" alt="Ayath"><br>
-                                        <p class="px-0 text-center small">
-                                            Ayath Agany Ayath<br>
-                                            (<a class="extra-small" href="lab.html#GROUP-C">Laboratory Group D</a>)
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-2 mb-md-0">
-                            <div class="bg-light-gray pb-3">
-                                <div class="card-body  text-center bg-light-gray bottom-white px-3 py-3">
-                                    <div class="card-body team-orange">
-                                        <img class="tf-image-primary" src="images/KuotJool.jpg" alt="Kuot"><br>
-                                        <p class="px-0 text-center small">
-                                            Kuot Jool Aluel<br>
-                                            (<a class="extra-small" href="lab.html#GROUP-C">Laboratory Group D</a>)
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+  <!-- Resources Section -->
+  <section id="resources">
+    <h2>Resources</h2>
+    <div class="resources-card">
+      <ul>
+        <li>PyTorch Documentation: <a href="https://pytorch.org/">https://pytorch.org/</a></li>
+        <li>Keras: <a href="https://keras.io/">https://keras.io/</a></li>
+        <li>Tensorflow: <a href="https://www.tensorflow.org/tutorials/quickstart/beginner">TensorFlow quick start</a></li>
+        <li>Deep Learning Book (Goodfellow et al.): <a href="https://www.deeplearningbook.org/">https://www.deeplearningbook.org/</a></li>
+      </ul>
+    </div>
+  </section>
 
+  <!-- Staff Team Section -->
+  <div class="staff-section" id="staff">
+    <h2>Staff</h2>
+    <div class="instructor-grid">
+      <div class="staff-card"><img class="staff-photo" src="images/felix_ai.jpg" alt="Dr. Felix Gonda"><div class="staff-name">Dr. Felix Gonda</div><div class="staff-role">Associate Professor, CS</div></div>
+    </div>
+    <div class="staff-grid">
+<!--      <div class="staff-card"><img class="staff-photo" src="images/felix_ai.jpg" alt="Dr. Felix Gonda"><div class="staff-name">Dr. Felix Gonda</div><div class="staff-role">Associate Professor, CS</div></div>-->
+      <div class="staff-card"><img class="staff-photo" src="images/Anibiko Samson Paulino.jpg" alt="Anibiko Samson Paulino"><div class="staff-name">Anibiko Samson Paulino</div><div class="staff-role">Teaching Fellow</div></div>
+      <div class="staff-card"><img class="staff-photo" src="images/Anthony Makur Marial.jpg" alt="Anthony Makur Marial"><div class="staff-name">Anthony Makur Marial</div><div class="staff-role">Teaching Fellow</div></div>
+      <div class="staff-card"><img class="staff-photo" src="images/Dhieu Ajak Paul.jpg" alt="Dhieu Ajak Paul"><div class="staff-name">Dhieu Ajak Paul</div><div class="staff-role">Teaching Fellow</div></div>
+      <div class="staff-card"><img class="staff-photo" src="images/Jane Keji Jino.jpg" alt="Jane Keji Jino"><div class="staff-name">Jane Keji Jino</div><div class="staff-role">Teaching Fellow</div></div>
+      <div class="staff-card"><img class="staff-photo" src="images/John Kon Deu.jpg" alt="John Kon Deu"><div class="staff-name">John Kon Deu</div><div class="staff-role">Teaching Fellow</div></div>
+      <div class="staff-card"><img class="staff-photo" src="images/Rapheal Sule Sebit.jpg" alt="Rapheal Sule Sebit"><div class="staff-name">Rapheal Sule Sebit</div><div class="staff-role">Teaching Fellow</div></div>
+      <div class="staff-card"><img class="staff-photo" src="images/Samuel Muranga Simon.jpg" alt="Samuel Muranga Simon"><div class="staff-name">Samuel Muranga Simon</div><div class="staff-role">Teaching Fellow</div></div>
+      <div class="staff-card"><img class="staff-photo" src="images/Samuel Wei Gai.jpg" alt="Samuel Wei Gai"><div class="staff-name">Samuel Wei Gai</div><div class="staff-role">Teaching Fellow</div></div>
+    </div>
+  </div>
 
+  <!-- Students Roster & Attendance Section -->
+  <section id="students" style="margin-top: 2.5rem;">
+    <h2>Students</h2>
+    <div class="students-table-container">
+      <table>
+        <thead>
+      <tr>
+        <th>No.</th>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Lecture Group</th>
+        <th>Lab Group</th>
+        <th>Attendance</th>
+        <th>W1</th>
+        <th>W2</th>
+        <th>W3</th>
+        <th>W4</th>
+        <th>W5</th>
+        <th>W6</th>
+        <th>W7</th>
+        <th>W8</th>
+      </tr>
+      </thead>
+        <tbody>
+      <tr>
+        <td>1</td>
+        <td>Ngbarago Roseline paulino</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Marline Zereda paulino</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>majok guing deng kuol</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Emmanuel Kenyi Samuel</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Mwaka Martin Stephen</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>Lomayia Sebit Soroba Malimbo</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>Thomas Tombe James Francis</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td>Lado Mayiik Yol Deng</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td>Biar Moses Mayen Atem</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td>John Dut Ater</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>11</td>
+        <td>Nelson Irama George</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>12</td>
+        <td>Deng Elijah Kuir Garang</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>13</td>
+        <td>Meen Malual Agok</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>14</td>
+        <td>Daniel makoi chor</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>15</td>
+        <td>Gabriel Mach Abuol Bior</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>16</td>
+        <td>Duku Paul Tisa</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>17</td>
+        <td>William chol Kuek</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>18</td>
+        <td>University of Juba</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>19</td>
+        <td>John Makuei Makuach</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>20</td>
+        <td>Nhial Abraham Maluac Nhial</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>21</td>
+        <td>Deng Madut Chan Madut</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>22</td>
+        <td>Vincent Maker Muar Machek</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>23</td>
+        <td>Godfrey Oroma Lodai</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>24</td>
+        <td>John Madut Akok</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>25</td>
+        <td>Emmanuel Soro Joseph Elnai</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>26</td>
+        <td>Dombek Buturs Ring</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>27</td>
+        <td>Nadir Hakim Awas</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>28</td>
+        <td>Wilson Thembeny Deng</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>29</td>
+        <td>Moun Abiokpiu Matong</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>30</td>
+        <td>Deng Meen Maley</td>
+        <td>Unknown</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>31</td>
+        <td>Nyok Nhial Nyok</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>32</td>
+        <td>Alol jacob thiel</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>33</td>
+        <td>Ajang</td>
+        <td>Unknown</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>34</td>
+        <td>Peter Bang Akou</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>35</td>
+        <td>Osman Adam Osman</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>36</td>
+        <td>Ngor Agook Kuol Mayen</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>37</td>
+        <td>James Majier Mabor Riak</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>38</td>
+        <td>Deng Gabriel Abraham</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>39</td>
+        <td>PETER MOU MOU DUT</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>40</td>
+        <td>Rayan Senose Anair</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>41</td>
+        <td>Garang Joseph Thon Garang</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>42</td>
+        <td>Theophilus John</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>43</td>
+        <td>Kueth Gattiek Khan</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>44</td>
+        <td>Gai Dut Jok</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>45</td>
+        <td>Atong Regina Tier</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>46</td>
+        <td>Gai Akuei Manyuat</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>47</td>
+        <td>Kiri Stanley Abe Abias</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>48</td>
+        <td>Thomas Ladu Yoahana</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>49</td>
+        <td>Anguei Mawien Akol Kuol</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>50</td>
+        <td>ISAAC ATEM DAU</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>51</td>
+        <td>Gatchang William Ruot Kulang</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>52</td>
+        <td>Dhieu Palier Loi Kur</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>53</td>
+        <td>Sunday John Kubi Juach</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>54</td>
+        <td>Thiak Ayuen Thiak</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>55</td>
+        <td>MARIAK MARIIK TONG</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>56</td>
+        <td>Salvatoria Akeen Koor Mayom</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>57</td>
+        <td>Daniel Lemi David Joseph</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>58</td>
+        <td>Agum Martha Mou</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>59</td>
+        <td>Yohana Ganiko Sette</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>60</td>
+        <td>Aweng Kuot Deng</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>61</td>
+        <td>Gabriel manyok Bul</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>62</td>
+        <td>Anzo John Keri</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>63</td>
+        <td>Riak Atem Riak Biar</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>64</td>
+        <td>Aleu Nhial Bol</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>65</td>
+        <td>Abol Manyiel Chol</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>66</td>
+        <td>Akot madhel mariak</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>67</td>
+        <td>JOHN WILLIAM KUAG BANG</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>68</td>
+        <td>Arop Kieu Ajou Ajak</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>69</td>
+        <td>Deng malueth maluk pach</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>70</td>
+        <td>Riak Mawut Angui</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>71</td>
+        <td>Malual Machol</td>
+        <td>Unknown</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>72</td>
+        <td>Jackline Hadia Ruben Luka</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>73</td>
+        <td>Elizabeth Ayen Thongbor</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>74</td>
+        <td>Angelo Them Mayen</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>75</td>
+        <td>JUSTIN MANI FAUSTINO</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>76</td>
+        <td>Kuot Micheal Ajith Kuot</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>77</td>
+        <td>Bona Bol Chadarl Tong</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>78</td>
+        <td>Deng mayom Deng leek</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>79</td>
+        <td>Michael John Lukudu Ebele</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>80</td>
+        <td>Ngakule Barbora Ngochalla</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>81</td>
+        <td>Angela Juru James sworo</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>82</td>
+        <td>William Bol Deng</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>83</td>
+        <td>Lina Gabriel Samuel</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>84</td>
+        <td>Joseph Wol Akol Abel</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>85</td>
+        <td>Daniel Mabior Aguer</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>86</td>
+        <td>Aniek monyluk Abiel monykuany</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>87</td>
+        <td>Chris Adut Jimaa</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>88</td>
+        <td>Benjamin Tokmac khamcil</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>89</td>
+        <td>Mohammed Rashid Amin</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>90</td>
+        <td>Gatkhor liyliy Gatkuoth</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>91</td>
+        <td>Deng Ayuel Muorwel</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>92</td>
+        <td>JOSEPH DAK KUR NYITHOK</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>93</td>
+        <td>Angong Augustino Agoth mou</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>94</td>
+        <td>Angelina Achol Kuol</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>95</td>
+        <td>Malual kiir Ayuel</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>96</td>
+        <td>Deng Chol Riak</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>97</td>
+        <td>James Awet Awet Awet</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>98</td>
+        <td>Anguei Aguer Aguer</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>99</td>
+        <td>James Akook Bol Ngor</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>100</td>
+        <td>Marko Wol Deng</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>101</td>
+        <td>Paduol Adewun Mawut</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>102</td>
+        <td>John hassen goliver doctor</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>103</td>
+        <td>Ngor Ayiik Deng</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>104</td>
+        <td>Kuol Marol Kuir Bul</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>105</td>
+        <td>Chan Deng Mayout Chan</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>106</td>
+        <td>Makuei Mathiang Ghach</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>107</td>
+        <td>LINO GARANG DAU</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>108</td>
+        <td>Samuel Pager Abai Beny</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>109</td>
+        <td>Mavonoku John Waure Henry</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>110</td>
+        <td>Majok Bol Ring Mourwel</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>111</td>
+        <td>Ajak Mayak Mabil</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>112</td>
+        <td>Alich Garang majok</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>113</td>
+        <td>Gabriel Dut Yak Yak</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>114</td>
+        <td>Apio Jacob Jenaro Mathiang</td>
+        <td>Unknown</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>115</td>
+        <td>Kharbino Wel Majok Dut</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>116</td>
+        <td>majok Beny Yol Mangok</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>117</td>
+        <td>Rufo Stephen Rufo Albert</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>118</td>
+        <td>KONGOR MARK DIING</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>119</td>
+        <td>John Kher Moses Abdalla</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>120</td>
+        <td>Thokbor John Mach Diing</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>121</td>
+        <td>Tony Natale Emillio</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>122</td>
+        <td>Garang Wek Akol Ateny</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>123</td>
+        <td>Kuol madut chinkou kuol</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>124</td>
+        <td>Atak Dut Parek Dut</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>125</td>
+        <td>Abraham Wek Dhieu Mayen</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>126</td>
+        <td>Peter Alphonse Akol Thiik</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>127</td>
+        <td>Adut Achuoth Mathon</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>128</td>
+        <td>John Chol Peter</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>129</td>
+        <td>Kuot Maduok madut Akol</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>130</td>
+        <td>Elizabeth Yom Chol</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>131</td>
+        <td>Garang Gabriel Kongor Deng</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>132</td>
+        <td>Bakita Ayel Yel</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>133</td>
+        <td>Abraham Agany Adok Ayom</td>
+        <td>Cyber Security</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>134</td>
+        <td>Louis Garang Manasses</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>135</td>
+        <td>David Albert Vicensio</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>136</td>
+        <td>TUT JOHN GARIAY TUT</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>137</td>
+        <td>Aguek Garang Majak</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>138</td>
+        <td>Makur Angui Puol</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>139</td>
+        <td>ACHAI KUOL DENG</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>140</td>
+        <td>Aguil Ater Madut Ater</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>141</td>
+        <td>TUT MUT LUOY</td>
+        <td>Computer Science</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>142</td>
+        <td>Michael Malith Majok</td>
+        <td>Information Technology</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      </tbody>
+      </table>
+    </div>
+  </section>
 
-                        <div class="col mb-5 mb-md-1 w-100">
-                        </div>
-                    </div>
-                    <div class="rowex row-cols-1 row-cols-md-1 w-100 bg-light-gray rounded-b">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </section>
-    <section>
-        <div class="azure-footer aem-GridColumn aem-GridColumn--default--12">
-            <footer id="azure-footer" class="azure-footer-nav acom-nav-service en-us" data-module="footer">
-                <span>© University of Juba 2025</span>
-            </footer>
-        </div>
-    </section>
+  <footer>
+    © 2026 Artificial Intelligence (CCS417) – University of Juba
+  </footer>
 </div>
 
-<script type="text/javascript" src="index.js"></script>
+<script>
+  (function() {
+    const panelSize = 70;
+    let currentClass = "cat";
+
+    function drawCat(ctx, w, h) {
+      ctx.fillStyle = "#0f172a"; ctx.fillRect(0,0,w,h);
+      ctx.fillStyle = "#3b82f6";
+      ctx.beginPath(); ctx.arc(w/2, h/2, w*0.25, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = "white";
+      ctx.beginPath(); ctx.arc(w*0.35, h*0.4, 4, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(w*0.65, h*0.4, 4, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = "#facc15";
+      ctx.beginPath(); ctx.moveTo(w*0.5, h*0.55); ctx.lineTo(w*0.45, h*0.65); ctx.lineTo(w*0.55, h*0.65); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(w*0.3, h*0.3); ctx.lineTo(w*0.2, h*0.2); ctx.lineTo(w*0.25, h*0.35); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(w*0.7, h*0.3); ctx.lineTo(w*0.8, h*0.2); ctx.lineTo(w*0.75, h*0.35); ctx.fill();
+    }
+    function drawDog(ctx,w,h) {
+      ctx.fillStyle="#0f172a"; ctx.fillRect(0,0,w,h);
+      ctx.fillStyle="#f59e0b"; ctx.beginPath(); ctx.arc(w/2,h/2,w*0.25,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle="white"; ctx.beginPath(); ctx.arc(w*0.35,h*0.4,4,0,Math.PI*2); ctx.fill(); ctx.beginPath(); ctx.arc(w*0.65,h*0.4,4,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle="#1e293b"; ctx.beginPath(); ctx.ellipse(w*0.5,h*0.6,8,5,0,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(w*0.3,h*0.25); ctx.lineTo(w*0.2,h*0.15); ctx.lineTo(w*0.25,h*0.3); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(w*0.7,h*0.25); ctx.lineTo(w*0.8,h*0.15); ctx.lineTo(w*0.75,h*0.3); ctx.fill();
+    }
+    function drawCar(ctx,w,h) {
+      ctx.fillStyle="#0f172a"; ctx.fillRect(0,0,w,h);
+      ctx.fillStyle="#ef4444"; ctx.fillRect(w*0.2,h*0.5,w*0.6,h*0.3);
+      ctx.fillStyle="#1e293b"; ctx.fillRect(w*0.25,h*0.45,w*0.5,h*0.1);
+      ctx.fillStyle="#111827"; ctx.beginPath(); ctx.arc(w*0.3,h*0.75,7,0,Math.PI*2); ctx.fill(); ctx.beginPath(); ctx.arc(w*0.7,h*0.75,7,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle="#facc15"; ctx.fillRect(w*0.45,h*0.55,6,10);
+    }
+    function getInputDraw(cls) {
+      if (cls === "cat") return drawCat;
+      if (cls === "dog") return drawDog;
+      return drawCar;
+    }
+    function getProbs(cls) {
+      if (cls === "cat") return [0.85, 0.10, 0.05];
+      if (cls === "dog") return [0.12, 0.82, 0.06];
+      return [0.05, 0.08, 0.87];
+    }
+    function drawConvRelu(ctx,w,h) {
+      ctx.fillStyle="#0f172a"; ctx.fillRect(0,0,w,h);
+      for(let i=0;i<80;i++){ let x=4+Math.random()*(w-8), y=4+Math.random()*(h-8); ctx.fillStyle=`rgba(59,130,246,${0.3+Math.random()*0.5})`; ctx.beginPath(); ctx.arc(x,y,1.5,0,Math.PI*2); ctx.fill(); }
+      ctx.beginPath(); ctx.moveTo(w*0.2,h*0.2); ctx.lineTo(w*0.8,h*0.8); ctx.strokeStyle="#facc15"; ctx.lineWidth=1.5; ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(w*0.8,h*0.2); ctx.lineTo(w*0.2,h*0.8); ctx.stroke();
+    }
+    function drawMaxPool(ctx,w,h) {
+      ctx.fillStyle="#0f172a"; ctx.fillRect(0,0,w,h);
+      let cells=6, cellW=w/cells, cellH=h/cells;
+      for(let i=0;i<cells;i++) for(let j=0;j<cells;j++) { let bright=80+Math.floor(Math.random()*120); ctx.fillStyle=`rgb(${bright},${bright-40},200)`; ctx.fillRect(i*cellW,j*cellH,cellW-1,cellH-1); }
+    }
+    function drawFC(ctx,w,h) {
+      ctx.fillStyle="#0f172a"; ctx.fillRect(0,0,w,h);
+      ctx.strokeStyle="#3b82f6"; ctx.lineWidth=1;
+      for(let i=0;i<5;i++){ let x=8+i*12, y=h/2; ctx.beginPath(); ctx.arc(x,y,3,0,Math.PI*2); ctx.fillStyle="#3b82f6"; ctx.fill(); if(i>0){ ctx.beginPath(); ctx.moveTo(x-8,y); ctx.lineTo(x-3,y); ctx.stroke(); } }
+      ctx.fillStyle="#facc15"; ctx.font="bold 7px system-ui"; ctx.fillText("FC",w-15,h/2+3);
+    }
+    function drawOutput(ctx,w,h,probs) {
+      ctx.fillStyle="#0f172a"; ctx.fillRect(0,0,w,h);
+      let classes=["Cat","Dog","Car"], barWidth=(w-10)/3-3;
+      for(let i=0;i<3;i++){ let barHeight=probs[i]*(h-18); ctx.fillStyle="#3b82f6"; ctx.fillRect(5+i*(barWidth+4),h-10-barHeight,barWidth-2,barHeight); ctx.fillStyle="#cbd5e1"; ctx.font="6px system-ui"; ctx.fillText(classes[i],6+i*(barWidth+4),h-2); ctx.fillStyle="#facc15"; ctx.fillText(`${Math.round(probs[i]*100)}%`,8+i*(barWidth+4),h-12-barHeight); }
+      ctx.fillStyle="white"; ctx.font="bold 6px system-ui"; let topClass=classes[probs.indexOf(Math.max(...probs))]; ctx.fillText(`${topClass} ${Math.round(Math.max(...probs)*100)}%`,w/2-15,8);
+    }
+
+    const container = document.getElementById("cnnFlow");
+    container.innerHTML = "";
+
+    function createStaticPanel(label, drawFunc) {
+      const div = document.createElement("div");
+      div.className = "flow-panel";
+      const canvas = document.createElement("canvas");
+      canvas.width = panelSize;
+      canvas.height = panelSize;
+      canvas.style.width = `${panelSize}px`;
+      canvas.style.height = `${panelSize}px`;
+      const ctx = canvas.getContext("2d");
+      drawFunc(ctx, panelSize, panelSize);
+      div.appendChild(canvas);
+      const lbl = document.createElement("div");
+      lbl.className = "flow-label";
+      lbl.innerText = label;
+      div.appendChild(lbl);
+      return div;
+    }
+
+    const selectorPanel = document.createElement("div");
+    selectorPanel.className = "flow-panel";
+    const verticalDiv = document.createElement("div");
+    verticalDiv.className = "selector-vertical";
+
+    function updateSelection(selectedClass) {
+      document.querySelectorAll(".selector-row").forEach(row => {
+        const btn = row.querySelector(".input-btn");
+        if (btn.dataset.class === selectedClass) {
+          btn.classList.add("active");
+          row.classList.add("active-arrow");
+        } else {
+          btn.classList.remove("active");
+          row.classList.remove("active-arrow");
+        }
+      });
+      const inputCtx = inputCanvas.getContext("2d");
+      const inputDraw = getInputDraw(selectedClass);
+      inputDraw(inputCtx, panelSize, panelSize);
+      const probs = getProbs(selectedClass);
+      const outputCtx = outputCanvas.getContext("2d");
+      drawOutput(outputCtx, panelSize, panelSize, probs);
+    }
+
+    function makeSelectorRow(label, cls) {
+      const row = document.createElement("div");
+      row.className = "selector-row";
+      const btn = document.createElement("button");
+      btn.textContent = label;
+      btn.className = "input-btn";
+      btn.dataset.class = cls;
+      const arrowSpan = document.createElement("span");
+      arrowSpan.className = "selector-arrow";
+      arrowSpan.textContent = "→";
+      row.appendChild(btn);
+      row.appendChild(arrowSpan);
+
+      btn.addEventListener("click", () => {
+        if (currentClass === cls) return;
+        currentClass = cls;
+        updateSelection(currentClass);
+      });
+      return row;
+    }
+
+    verticalDiv.appendChild(makeSelectorRow("🐱 Cat", "cat"));
+    verticalDiv.appendChild(makeSelectorRow("🐶 Dog", "dog"));
+    verticalDiv.appendChild(makeSelectorRow("🚗 Car", "car"));
+    selectorPanel.appendChild(verticalDiv);
+    const selectorLabel = document.createElement("div");
+    selectorLabel.className = "flow-label";
+    selectorLabel.innerText = "Select Input";
+    selectorPanel.appendChild(selectorLabel);
+    container.appendChild(selectorPanel);
+
+    const arrow0 = document.createElement("span");
+    arrow0.className = "arrow";
+    arrow0.textContent = "→";
+    container.appendChild(arrow0);
+
+    const inputPanelDiv = document.createElement("div");
+    inputPanelDiv.className = "flow-panel";
+    const inputCanvas = document.createElement("canvas");
+    inputCanvas.width = panelSize;
+    inputCanvas.height = panelSize;
+    inputCanvas.style.width = `${panelSize}px`;
+    inputCanvas.style.height = `${panelSize}px`;
+    inputPanelDiv.appendChild(inputCanvas);
+    const inputLabelDiv = document.createElement("div");
+    inputLabelDiv.className = "flow-label";
+    inputLabelDiv.innerText = "Input Image";
+    inputPanelDiv.appendChild(inputLabelDiv);
+    container.appendChild(inputPanelDiv);
+
+    const arrow1 = document.createElement("span");
+    arrow1.className = "arrow";
+    arrow1.textContent = "→";
+    container.appendChild(arrow1);
+
+    const convPanel = createStaticPanel("Conv+ReLU", drawConvRelu);
+    container.appendChild(convPanel);
+    const arrow2 = document.createElement("span");
+    arrow2.className = "arrow";
+    arrow2.textContent = "→";
+    container.appendChild(arrow2);
+
+    const poolPanel = createStaticPanel("MaxPool", drawMaxPool);
+    container.appendChild(poolPanel);
+    const arrow3 = document.createElement("span");
+    arrow3.className = "arrow";
+    arrow3.textContent = "→";
+    container.appendChild(arrow3);
+
+    const fcPanel = createStaticPanel("Fully Connected", drawFC);
+    container.appendChild(fcPanel);
+    const arrow4 = document.createElement("span");
+    arrow4.className = "arrow";
+    arrow4.textContent = "→";
+    container.appendChild(arrow4);
+
+    const outputPanelDiv = document.createElement("div");
+    outputPanelDiv.className = "flow-panel";
+    const outputCanvas = document.createElement("canvas");
+    outputCanvas.width = panelSize;
+    outputCanvas.height = panelSize;
+    outputCanvas.style.width = `${panelSize}px`;
+    outputCanvas.style.height = `${panelSize}px`;
+    outputPanelDiv.appendChild(outputCanvas);
+    const outputLabelDiv = document.createElement("div");
+    outputLabelDiv.className = "flow-label";
+    outputLabelDiv.innerText = "Output (3 classes)";
+    outputPanelDiv.appendChild(outputLabelDiv);
+    container.appendChild(outputPanelDiv);
+
+    updateSelection("cat");
+  })();
+</script>
 </body>
 </html>

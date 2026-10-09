@@ -164,7 +164,7 @@
 
     <!-- Sub-header Meta Row -->
     <div class="flex justify-between items-center text-xs text-slate-400 px-1">
-        <div>Last Built: <span class="text-slate-600">October 07, 2026 08:00 PM</span></div>
+        <div>Last Built: <span class="text-slate-600">October 09, 2026 08:39 AM</span></div>
     </div>
 
     <!-- Search and Filter Controls -->
@@ -302,6 +302,16 @@
         <div>
             <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Attendance Record (W1 - W8)</h4>
             <div class="grid grid-cols-8 gap-2 text-center" id="modal-attendance">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- Project Group Members Section (NEW) -->
+        <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                Project Group Members (<span id="modal-group-name">-</span>)
+            </h4>
+            <div id="modal-group-members" class="bg-slate-50 rounded-xl p-3 border border-slate-200">
                 <!-- Populated by JS -->
             </div>
         </div>
@@ -485,11 +495,11 @@
         const genderVal = studentObj.Gender || 'N/A';
         document.getElementById('modal-subtext').innerText = `Index: ${indexVal} | Dept: ${deptVal} | Gender: ${genderVal}`;
 
-        // Lecture group and time (group name only, smaller italic time)
+        // Lecture group and time
         document.getElementById('modal-lecture-group').innerText = studentObj.Lecture || '-';
         document.getElementById('modal-lecture-time').innerText = studentObj.LectureTime || '';
 
-        // Lab group and time (group name only, smaller italic time)
+        // Lab group and time
         document.getElementById('modal-lab-group').innerText = studentObj.Lab || '-';
         document.getElementById('modal-lab-time').innerText = studentObj.LabTime || '';
 
@@ -531,6 +541,50 @@
                         <span class="text-xs font-bold">-</span>
                     </div>
                 `;
+            }
+        }
+
+        // Render Project Group Members with Emails
+        const groupNameElem = document.getElementById('modal-group-name');
+        const membersContainer = document.getElementById('modal-group-members');
+
+        if (groupNameElem) groupNameElem.innerText = studentObj.ProjectGroup || 'N/A';
+
+        if (membersContainer) {
+            membersContainer.innerHTML = '';
+
+            if (studentObj.ProjectGroup) {
+                // Find all team members belonging to the same project group
+                const groupMembers = rawData.filter(s => s.ProjectGroup === studentObj.ProjectGroup);
+
+                let groupHTML = '<div class="divide-y divide-slate-200/60">';
+                groupMembers.forEach(member => {
+                    const isCurrentStudent = member.Index === studentObj.Index;
+                    const memberEmail = member.Email || 'No email available';
+
+                    groupHTML += `
+                        <div class="py-2 px-2 flex items-center justify-between text-xs ${isCurrentStudent ? 'font-bold text-indigo-700 bg-indigo-50/60 rounded-lg' : 'text-slate-700'}">
+                            <div class="flex flex-col gap-0.5">
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-solid fa-user text-slate-400 text-[10px]"></i>
+                                    <span>${member.Name}</span>
+                                    <span class="text-[10px] text-slate-400 font-normal">(${member.Index})</span>
+                                </div>
+                                <a href="mailto:${memberEmail}" class="flex items-center gap-1.5 text-[11px] text-indigo-600 hover:text-indigo-800 font-normal underline decoration-indigo-200">
+                                    <i class="fa-regular fa-envelope text-[10px]"></i>
+                                    <span>${memberEmail}</span>
+                                </a>
+                            </div>
+                            <span class="bg-slate-200/70 text-slate-700 text-[10px] px-2 py-0.5 rounded-full font-medium">
+                                ${member.ProjectRole || 'Member'}
+                            </span>
+                        </div>
+                    `;
+                });
+                groupHTML += '</div>';
+                membersContainer.innerHTML = groupHTML;
+            } else {
+                membersContainer.innerHTML = '<span class="text-xs text-slate-400 italic">No project group assigned.</span>';
             }
         }
 

@@ -10,36 +10,41 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         /* Rotated Header Styles */
-        /*.th-rotated {*/
-        /*    height: 140px;*/
-        /*    vertical-align: bottom;*/
-        /*    padding-bottom: 12px !important;*/
-        /*}*/
-        /*.rotate-wrapper {*/
-        /*    transform: rotate(-90deg);*/
-        /*    transform-origin: left bottom;*/
-        /*    white-space: nowrap;*/
-        /*    width: 28px;*/
-        /*    margin-left: 14px;*/
-        /*}*/
         .th-rotated {
             height: 140px;
             vertical-align: bottom;
             padding-bottom: 5px !important;
-            text-align: center; /* Horizontally centers the inline-block child */
+            text-align: center;
         }
 
         .rotate-wrapper {
-            display: inline-block; /* Essential for text-align and transforms to work correctly */
-            transform: rotate(-90deg) translateX(50%); /* Rotates and aligns to the baseline center */
-            transform-origin: center center; /* Changes origin from left-bottom to center */
+            display: inline-block;
+            transform: rotate(-90deg) translateX(50%);
+            transform-origin: center center;
             white-space: nowrap;
-            width: 28px; /* Dictates the width of the table column */
+            width: 28px;
         }
         /* Row Selection Highlight */
         .selected-row {
             background-color: #eff6ff !important;
             border-left: 4px solid #2563eb !important;
+        }
+        /* Pastel Red Styles for Zero Total */
+        .bg-rose-50 {
+            --tw-bg-opacity: 1;
+            background-color: rgb(255 241 242 / var(--tw-bg-opacity, 1));
+        }
+        .text-rose-800 {
+            --tw-text-opacity: 1;
+            color: rgb(159 18 57 / var(--tw-text-opacity, 1));
+        }
+        /* Target row and its cells directly to force the pastel red border matching text color */
+        tr.zero-total-row {
+            background-color: rgb(255 241 242) !important;
+            color: rgb(159 18 57) !important;
+        }
+        tr.zero-total-row td {
+            border-bottom: 1px solid rgb(159 18 57) !important;
         }
         /* Hero Banner Image Section */
         .hero-banner-section {
@@ -167,7 +172,7 @@
 
     <!-- Sub-header Meta Row -->
     <div class="flex justify-between items-center text-xs text-slate-400 px-1">
-        <div>Last Built: <span class="text-slate-600">November 05, 2026 09:54 AM</span></div>
+        <div>Last Built: <span class="text-slate-600">November 05, 2026 10:15 AM</span></div>
     </div>
 
     <!-- Search and Filter Controls -->
@@ -250,10 +255,6 @@
         <div class="flex items-start justify-between border-b border-slate-100 pb-4">
             <div class="flex items-center gap-4">
                 <div class="w-12 h-12 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-lg" id="modal-initials">--</div>
-<!--                <div>-->
-<!--                    <h2 class="text-xl font-bold text-slate-900" id="modal-name">Student Name</h2>-->
-<!--                    <p class="text-xs text-slate-500" id="modal-subtext">Index: &#45;&#45; | Dept: &#45;&#45;</p>-->
-<!--                </div>-->
                 <div>
                     <h2 class="text-xl font-bold text-slate-900" id="modal-name">Student Name</h2>
                     <p class="text-xs text-slate-500" id="modal-subtext">Index: -- | Dept: -- | Gender: --</p>
@@ -309,7 +310,7 @@
             </div>
         </div>
 
-        <!-- Project Group Members Section (NEW) -->
+        <!-- Project Group Members Section -->
         <div>
             <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
                 Project Group Members (<span id="modal-group-name">-</span>)
@@ -383,7 +384,6 @@
         const deptCounts = {};
         rawData.forEach(s => {
             const rawDept = s.Department ? s.Department.trim().toUpperCase() : 'UNKNOWN';
-            // Convert full name to short abbreviation using the map, fallback to raw if not found
             const d = deptAbbrevMap[rawDept] || rawDept;
             deptCounts[d] = (deptCounts[d] || 0) + 1;
         });
@@ -459,9 +459,8 @@
 
         students = rawData.filter(s => {
             const matchesName = (s.Name || '').toLowerCase().includes(query) ||
-                                (s.ProjectGroup || '').toLowerCase().includes(query) ||
-                                (s.ProjectGroup || '').toLowerCase().includes(query) ||
-                                (s.Index || '').toLowerCase().includes(query);
+                (s.ProjectGroup || '').toLowerCase().includes(query) ||
+                (s.Index || '').toLowerCase().includes(query);
             const matchesDept = !dept || String(s.Department) === dept;
             const matchesLec = !lec || String(s.Lecture) === lec;
             const matchesLab = !lab || String(s.Lab) === lab;
@@ -495,17 +494,14 @@
 
         document.getElementById('modal-name').innerText = studentObj.Name || 'Unknown Student';
 
-        // Show Index, Dept, and Gender in the subtitle line
         const indexVal = studentObj.Index || 'N/A';
         const deptVal = studentObj.Department || 'N/A';
         const genderVal = studentObj.Gender || 'N/A';
         document.getElementById('modal-subtext').innerText = `Index: ${indexVal} | Dept: ${deptVal} | Gender: ${genderVal}`;
 
-        // Lecture group and time
         document.getElementById('modal-lecture-group').innerText = studentObj.Lecture || '-';
         document.getElementById('modal-lecture-time').innerText = studentObj.LectureTime || '';
 
-        // Lab group and time
         document.getElementById('modal-lab-group').innerText = studentObj.Lab || '-';
         document.getElementById('modal-lab-time').innerText = studentObj.LabTime || '';
 
@@ -560,7 +556,6 @@
             membersContainer.innerHTML = '';
 
             if (studentObj.ProjectGroup) {
-                // Find all team members belonging to the same project group
                 const groupMembers = rawData.filter(s => s.ProjectGroup === studentObj.ProjectGroup);
 
                 let groupHTML = '<div class="divide-y divide-slate-200/60">';
@@ -617,8 +612,21 @@
 
         students.forEach((student) => {
             const isSelected = selectedIndex === student.Index;
+            const totalVal = Number(student.Total) || 0;
+            const isZeroTotal = totalVal === 0;
+
             const tr = document.createElement('tr');
-            tr.className = `hover:bg-slate-100/70 transition cursor-pointer border-b border-slate-100 ${isSelected ? 'selected-row font-semibold' : ''}`;
+
+            let rowClasses = 'hover:bg-slate-100/70 transition cursor-pointer';
+            if (isZeroTotal) {
+                rowClasses += ' zero-total-row';
+            } else {
+                rowClasses += ' border-b border-slate-100';
+            }
+            if (isSelected) {
+                rowClasses += ' selected-row font-semibold';
+            }
+            tr.className = rowClasses;
             tr.onclick = () => selectRow(student.Index, student);
 
             let rowHTML = `
@@ -627,33 +635,16 @@
                         <i class="fa-solid fa-arrow-right text-[10px]"></i>
                     </button>
                 </td>
-                <td class="p-3 font-medium text-slate-900">${student.Name || '-'}<div class="text-[10px] text-slate-400 font-normal">${student.Index || ''}</div></td>
-                <td class="p-3 text-slate-600">${student.Lecture || '-'}</td>
-                <td class="p-3 text-slate-600">${student.Lab || '-'}</td>
-                <td class="p-3 font-semibold text-indigo-700 whitespace-nowrap">${student.ProjectGroup || '-'}</td>
+                <td class="p-3 font-medium ${isZeroTotal ? 'text-rose-800' : 'text-slate-900'}">${student.Name || '-'}<div class="text-[10px] ${isZeroTotal ? 'text-rose-600' : 'text-slate-400'} font-normal">${student.Index || ''}</div></td>
+                <td class="p-3 ${isZeroTotal ? 'text-rose-800' : 'text-slate-600'}">${student.Lecture || '-'}</td>
+                <td class="p-3 ${isZeroTotal ? 'text-rose-800' : 'text-slate-600'}">${student.Lab || '-'}</td>
+                <td class="p-3 font-semibold ${isZeroTotal ? 'text-rose-800' : 'text-indigo-700'} whitespace-nowrap">${student.ProjectGroup || '-'}</td>
             `;
-
-            if (student.Total === 0) {
-                tr.className = `hover:bg-red-100/70 bg-rose-800 transition cursor-pointer border-b border-slate-100 ${isSelected ? 'selected-row font-semibold' : ''}`;
-
-                rowHTML = `
-                <td class="p-3 text-center">
-                    <button class="w-6 h-6 rounded-full inline-flex items-center justify-center transition ${isSelected ? 'bg-indigo-600 text-white' : 'bg-slate-200 text-slate-500 hover:bg-indigo-500 hover:text-white'}">
-                        <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                    </button>
-                </td>
-                <td class="p-3 font-medium text-white">${student.Name || '-'}<div class="text-[10px] text-slate-400 font-normal">${student.Index || ''}</div></td>
-                <td class="p-3 text-white">${student.Lecture || '-'}</td>
-                <td class="p-3 text-white">${student.Lab || '-'}</td>
-                <td class="p-3 font-semibold text-white whitespace-nowrap">${student.ProjectGroup || '-'}</td>
-            `;
-
-            }
 
             // W1-W8 Assignment Scores
             for (let i = 1; i <= 8; i++) {
                 const val = Number(student[`W${i}`]) || 0;
-                rowHTML += `<td class="p-3 text-center ${val > 0 ? 'text-indigo-900 font-medium' : 'text-slate-300'}">${val}</td>`;
+                rowHTML += `<td class="p-3 text-center ${isZeroTotal ? 'text-rose-800' : (val > 0 ? 'text-indigo-900 font-medium' : 'text-slate-300')}">${val}</td>`;
             }
 
             // A1-A8 Attendance Columns
@@ -676,7 +667,7 @@
                 }
             }
 
-            rowHTML += `<td class="p-3 text-right font-bold text-indigo-700">${student.Total ?? 0}</td>`;
+            rowHTML += `<td class="p-3 text-right font-bold ${isZeroTotal ? 'text-rose-800' : 'text-indigo-700'}">${student.Total ?? 0}</td>`;
             tr.innerHTML = rowHTML;
             tbody.appendChild(tr);
         });
